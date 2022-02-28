@@ -1,5 +1,3 @@
-import Inputs from './javaScript/Input.js';
-
 
 function editNav() {
   icon.style.display = "none";
@@ -98,29 +96,32 @@ form.addEventListener("submit",function validate(e) {
   e.preventDefault();
   const inputs = form.getElementsByClassName("text-control");
   let asError = false;
-
+  // chercher les entrées correspondante entre formValidate et les inputs
   for (let i = 0; i< inputs.length; i++) {
     for(const item in formValidate){
      
       if (inputs[i].name === formValidate[item].name){
         const input = inputs[i];
 
+        // tester les inputs avec les regex
         if (!formValidate[item].regex.test(inputs[i].value)) {
           asError = true;
-        
+
+          //si erreur et pas de pError : création d'un paragraphe
           if (input.nextElementSibling === null) {
             let p = document.createElement("p");
             input.parentNode.appendChild(p);
           }
-
+          // erreur personnalisé
           let pError = input.nextElementSibling;
           pError.className = "formError"
           pError.previousElementSibling.classList.add("inputError");
           pError.innerHTML = formValidate[item].errorCustom;
 
-        } else {
+        } else { // si pas d'ereur
           if (input.nextElementSibling === null) {
-          } else if (input.nextElementSibling.tagName === "P"){
+          } // supression du message d'erreur 
+          else if (input.nextElementSibling.tagName === "P"){
             let pError = input.nextElementSibling;
             pError.previousElementSibling.classList.remove("inputError");
             input.parentNode.removeChild(pError);
@@ -151,6 +152,7 @@ function confirmMessage() {
   sendConfirm.style.display = "block";
 };
 
+// verification des checkbox et radios
 function validateRadios() {
   let formValid = true;
   let inputwarps = document.getElementsByClassName("inputWarp");
@@ -158,19 +160,21 @@ function validateRadios() {
   for (let i = 0; i< inputwarps.length; i++) {
     const checkbox = inputwarps[i].getElementsByClassName("checkbox-input");
     let hasInputWarpsValid = false
+    // supression des anciens message d'erreurs
     if (inputwarps[i].lastElementChild.tagName === "P") {
       inputwarps[i].removeChild(inputwarps[i].lastElementChild);
     }
 
+    // // chercher les entrées correspondante entre validChecbox et les inputs
     for (let j = 0; j < checkbox.length; j++) {
       for (const item in validCheckbox) {
-       
+       // parcours des inputs pour voir si cochée
         if (validCheckbox[item].name === checkbox[j].name && validCheckbox[item].required){
-         
           if (checkbox[j].checked) {
             hasInputWarpsValid = true;
           
           }
+          // si erreur création de message personalisé
           if (!hasInputWarpsValid && inputwarps[i].lastElementChild.tagName !== "P") {
             let htmlContent = `<p> ${validCheckbox[item].error}</p>`;
             inputwarps[i].insertAdjacentHTML('beforeend', htmlContent);
@@ -178,7 +182,7 @@ function validateRadios() {
             pError.className = "formError";
             pError.innerHTML = formValidate[item].errorCustom;
           }
-
+          // si pas requis 
         } if (validCheckbox[item].name === checkbox[j].name && !validCheckbox[item].required ){
           hasInputWarpsValid = true;
         }
