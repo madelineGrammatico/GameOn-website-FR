@@ -1,4 +1,8 @@
 @import '../modal.css';
+* {
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
+}
+
 p {
   margin-bottom: 0;
   padding: 0.5vw;
@@ -22,7 +26,7 @@ p {
 
 label {
   font-family: var(--font-default);
-  font-size: 17px;
+  font-size: 15px;
   font-weight: normal;
   display: inline-block;
   margin-bottom: 11px;
@@ -53,23 +57,27 @@ input {
   text-align: right;
   line-height: 0.3;
   opacity: 0;
-  transition: 0.3s;
 }
 
 .formData[data-error-visible=true]::after {
   opacity: 1;
 }
 
-.formData[data-error-visible=true] .text-control {
+.formData[data-error-visible=true] .text-control,
+.inputError {
   border: 2px solid #e54858;
 }
 
-/* 
-input[data-error]::after {
-    content: attr(data-error);
-    font-size: 0.4em;
-    color: red;
-} */
+/* */
+input[data-error]::after,
+.formError {
+  content: attr(data-error);
+  font-size: 15px;
+  color: red;
+  transition: 0.3s;
+  margin-top: 0;
+}
+
 .checkbox-label,
 .checkbox2-label {
   position: relative;
@@ -182,16 +190,23 @@ input[data-error]::after {
 }
 
 .btn-submit,
-.btn-signup {
+.btn-signup,
+.btn-closeModal {
   background: #fe142f;
   display: block;
   margin: 0 auto;
   border-radius: 7px;
   font-size: 1rem;
-  padding: 12px 82px;
+  padding: 12px 42px;
   color: #fff;
   cursor: pointer;
   border: 0;
+}
+
+.btn-signup {
+  margin: 0px;
+  width: 40%;
+  min-width: 170px;
 }
 
 .topnav {
@@ -284,6 +299,7 @@ main {
   height: 100%;
   display: block;
   padding: 0;
+  object-fit: cover;
 }
 
 .hero-section > .btn-signup {
@@ -292,7 +308,7 @@ main {
 
 /* custom select end */
 .hero-section {
-  min-height: 93vh;
+  height: 70vh;
   border-radius: 10px;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -302,23 +318,17 @@ main {
 }
 
 .hero-content {
-  padding: 51px 67px;
+  padding: 0 67px;
   grid-column: span 4;
   background: #232323;
   color: #fff;
   position: relative;
   text-align: left;
-  min-width: 424px;
-}
-
-.hero-content::after {
-  content: "";
-  width: 100%;
-  height: 100%;
-  background: #232323;
-  position: absolute;
-  right: -80px;
-  top: 0;
+  min-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 70vh;
 }
 
 .hero-content > * {
@@ -327,15 +337,17 @@ main {
 }
 
 .hero-headline {
-  font-size: 6rem;
+  font-size: 6vw;
+  margin: 0;
   font-weight: normal;
   white-space: nowrap;
+  width: 100%;
 }
 
 .hero-text {
-  width: 146%;
+  width: 100%;
   font-weight: normal;
-  margin-top: 57px;
+  margin-top: 0;
   padding: 0;
 }
 
@@ -343,12 +355,17 @@ main {
   .hero-section {
     display: block;
     box-shadow: unset;
+    height: inherit;
   }
 
   .hero-content {
     background: #fff;
     color: #000;
-    padding: 20px;
+    padding: 0px;
+    grid-column: inherit;
+    min-width: inherit;
+    gap: 30px;
+    height: inherit;
   }
 
   .hero-content::after {
@@ -362,16 +379,17 @@ main {
   .hero-headline {
     font-size: 4.5rem;
     white-space: normal;
+    width: 100%;
   }
 
   .hero-text {
-    width: unset;
+    min-width: inherit;
     font-size: 1.5rem;
   }
 
   .hero-img img {
     border-radius: 10px;
-    margin-top: 40px;
+    margin-top: 50px;
   }
 
   .hero-section > .btn-signup {
@@ -385,6 +403,12 @@ main {
     text-align: center;
   }
 }
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .bground {
   display: none;
   position: fixed;
@@ -399,6 +423,7 @@ main {
 .bground .content {
   margin: 5% auto;
   width: 100%;
+  min-height: 810px;
   max-width: 500px;
   animation-name: modalopen;
   animation-duration: var(--modal-duration);
@@ -407,7 +432,6 @@ main {
   overflow: hidden;
   position: relative;
   color: #fff;
-  padding-top: 10px;
 }
 .bground .content .modal-body {
   padding: 15px 8%;
@@ -450,6 +474,14 @@ main {
 
 .close:after {
   transform: rotate(-45deg);
+}
+
+.sendConfirm {
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .footer {

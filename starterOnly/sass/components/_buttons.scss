@@ -42,14 +42,20 @@
 }
 
 .btn-submit,
-.btn-signup {
+.btn-signup,
+.btn-closeModal {
   background: #fe142f;
   display: block;
   margin: 0 auto;
   border-radius: 7px;
   font-size: 1rem;
-  padding: 12px 82px;
+  padding: 12px 42px;
   color: #fff;
   cursor: pointer;
   border: 0;
+}
+.btn-signup {
+    margin: 0px;
+    width: 40%;
+    min-width: 170px;
 }
